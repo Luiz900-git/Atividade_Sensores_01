@@ -423,7 +423,7 @@ int main()
             npWrite();
             npClear();
 
-        } else if (last_pressure < 100){
+        } else if (last_pressure > 10000){
             beep(BUZZER_PIN, 250);
             npSetLED(2, 255, 0, 0);
             npSetLED(12, 255, 0, 0);
@@ -432,7 +432,7 @@ int main()
             npWrite();
             npClear();
 
-        } else if (last_altitude < 100){
+        } else if (last_altitude > 10000){
             beep(BUZZER_PIN, 250);
             npSetLED(2, 255, 0, 0);
             npSetLED(12, 255, 0, 0);
