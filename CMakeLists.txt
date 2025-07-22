@@ -10,18 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # (note this can come from environment, CMake cache etc)
 
 # == DO NOT EDIT THE FOLLOWING LINES for the Raspberry Pi Pico VS Code Extension to work ==
-if(WIN32)
-    set(USERHOME $ENV{USERPROFILE})
-else()
-    set(USERHOME $ENV{HOME})
-endif()
-set(sdkVersion 2.1.1)
-set(toolchainVersion 14_2_Rel1)
-set(picotoolVersion 2.1.1)
-set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
-if (EXISTS ${picoVscode})
-    include(${picoVscode})
-endif()
+
 # ====================================================================================
 set(PICO_BOARD pico_w CACHE STRING "Board type")
 
@@ -44,18 +33,18 @@ add_executable(press_web press_web.c
         lib/ssd1306.c
 )
 
-pico_set_program_name(press_web "press_web")
-pico_set_program_version(press_web "0.1")
+pico_set_program_name(${PROJECT_NAME} "press_web")
+pico_set_program_version(${PROJECT_NAME} "0.1")
 
 # Generate PIO header
 pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/ws2818b.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(press_web 0)
-pico_enable_stdio_usb(press_web 1)
+pico_enable_stdio_uart(${PROJECT_NAME} 0)
+pico_enable_stdio_usb(${PROJECT_NAME} 1)
 
 # Add the standard library to the build
-target_link_libraries(press_web
+target_link_libraries(${PROJECT_NAME}
         pico_stdlib
         hardware_gpio
         hardware_adc
@@ -67,14 +56,14 @@ target_link_libraries(press_web
         )
 
 # Add the standard include files to the build
-target_include_directories(press_web PRIVATE
+target_include_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Add any user requested libraries
-target_link_libraries(press_web 
+target_link_libraries(${PROJECT_NAME} 
         
         )
 
-pico_add_extra_outputs(press_web)
+pico_add_extra_outputs(${PROJECT_NAME})
 
